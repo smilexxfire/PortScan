@@ -22,13 +22,15 @@ class Nmap(Module):
         self.nm.scan(hosts=self.ip, ports=self.port, arguments="-Pn -sS -sV")
 
     def deal_data(self):
-        # 获取扫描结果
+        # 处理扫描结果
         host = self.ip
         protocol = "tcp"
         self.open_ports = list()
-
         ports = self.nm[host][protocol].keys()
         for port in sorted(ports):
+            state = self.nm[host][protocol][port].get('state', 'unknown')
+            if not state == "open":
+                continue
             service_info = self.nm[host][protocol][port]
             self.open_ports.append({
                 "port": port,
@@ -58,4 +60,4 @@ def run(ip:str,port:str):
     nmap.run()
 
 if __name__ == '__main__':
-    run("192.168.1.1", "1-2000")
+    run("192.168.1.1", "80")
