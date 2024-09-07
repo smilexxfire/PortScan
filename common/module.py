@@ -67,10 +67,7 @@ class Module(object):
         Save module results into the database
         """
         logger.log('INFOR', f'Start save db results')
-        if len(self.results) == 0:
-            return
-
-        doc = self.results[0]
+        doc = self.results
         query = {"host": doc["host"]}
         while True:
             try:
