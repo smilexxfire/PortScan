@@ -8,6 +8,7 @@
 @Date    ：2024/9/5 20:45 
 @Comment ： 
 '''
+import datetime
 import sys
 import os
 sys.path.append("D:\\pythonProject\\PortScan")
@@ -39,10 +40,11 @@ class Naabu(Module):
             json_list = [json.loads(data) for data in datas]
             for data in json_list:
                 self.open_ports.append(data["port"])
-        self.results = [{
+        self.results = {
             "host": self.ip,
-            "open_ports": self.open_ports
-        }]
+            "open_ports": self.open_ports,
+            "insert_time": datetime.datetime.now()
+        }
     def save_db(self):
         # print(self.results)
         super().save_db(self.collection)

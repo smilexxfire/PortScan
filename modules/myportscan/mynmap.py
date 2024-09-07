@@ -10,6 +10,7 @@
 '''
 from common.module import Module
 import nmap
+from datetime import datetime
 class Nmap(Module):
     def __init__(self,ip:str,port:str):
         self.module = "portscan"
@@ -39,10 +40,11 @@ class Nmap(Module):
                 "version": service_info.get('version', 'N/A'),
                 "extrainfo": service_info.get('extrainfo', 'N/A')
             })
-        self.results = [{
+        self.results = {
             "host": self.ip,
             "open_ports": self.open_ports,
-        }]
+            "insert_time": datetime.now()
+        }
 
     def save_db(self):
         # print(self.results)
