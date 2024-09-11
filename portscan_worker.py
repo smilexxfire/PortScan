@@ -11,17 +11,17 @@
 import json
 from common.database.consumer import RabbitMQConsumer
 from modules.portscan import PortScan
-from config.settings import RABBITMQ_QUEUE_NAME
 
+QUEUE_NAME = "portscan"
 class PortscanWorker(RabbitMQConsumer):
 
     def __init__(self):
-        super().__init__(RABBITMQ_QUEUE_NAME)
+        super().__init__(QUEUE_NAME)
 
     def task_handle(self):
         task = json.loads(self.message)
-        subdomain = PortScan(task)
-        subdomain.run()
+        portscan = PortScan(task)
+        portscan.run()
 
 
 if __name__ == '__main__':

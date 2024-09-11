@@ -48,7 +48,7 @@ class Nmap(Module):
 
     def save_db(self):
         # print(self.results)
-        super().save_db(self.collection)
+        super().save_db()
 
     def run(self):
         self.begin()

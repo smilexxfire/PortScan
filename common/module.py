@@ -62,7 +62,7 @@ class Module(object):
             for domain in self.targets:
                 f.write(domain.strip() + "\n")
 
-    def save_db(self, collection):
+    def save_db(self):
         """
         Save module results into the database
         """
@@ -71,8 +71,16 @@ class Module(object):
         query = {"host": doc["host"]}
         while True:
             try:
-                db = conn_db(collection)
-                db.update_one(query, {"$set": doc}, upsert=True)
+                db = conn_db(self.collection)
+                result = db.update_one(query, {"$set": doc}, upsert=True)
+                # 获取操作结果并打印
+                if result.matched_count > 0:
+                    logger.log("INFOR", "Matched and Updated")
+                    print(f"文档已更新: {result.matched_count}")
+                elif result.upserted_id:
+                    logger.log("INFOR", "Not matched and insert one")
+                else:
+                    logger.log("INFOR", "Not matched and not insert")
                 return
             except Exception as e:
                 logger.log("ERROR", f"error：{e}")

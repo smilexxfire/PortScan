@@ -18,7 +18,6 @@ RABBITMQ_HOST = read_ini_config("rabbitmq", "host")
 RABBITMQ_PORT = read_ini_config("rabbitmq", "port")
 RABBITMQ_USER = read_ini_config("rabbitmq", "username")
 RABBITMQ_PASSWORD = read_ini_config("rabbitmq", "password")
-RABBITMQ_QUEUE_NAME = read_ini_config("rabbitmq", "queue_name")
 
 # 读取配置文件 - mongo
 MONGO_HOST = read_ini_config("mongo", "host")
