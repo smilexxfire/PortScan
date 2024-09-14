@@ -47,7 +47,7 @@ class Naabu(Module):
         }
     def save_db(self):
         # print(self.results)
-        if len(self.result_file["open_ports"]) > 0:
+        if len(self.results["open_ports"]) > 0:
             super().save_db()
 
     def run(self):
