@@ -27,14 +27,19 @@ class PortScan(object):
         elif self.task["port"] == "full":
             self.task["port"] = settings.full
 
+        ip = self.task["ip"]
+        port = self.task["port"]
+        task_id = self.task["task_id"]
         # 开启扫描
         if self.task["module_name"] == "nmap":
-            mynmap.run(self.task["ip"], self.task["port"])
+            mynmap.run(ip, port, task_id)
         elif self.task["module_name"] == "naabu":
-            naabu.run(self.task["ip"], self.task["port"])
-        logger.log('INFOR', f'Finished port scan of {self.task["ip"]}')
+            naabu.run(ip, port, task_id)
+        else:
+            logger.info("ERROR", f"module {self.task['module_name']} is not supported")
+        logger.log('INFOR', f'Finished port scan of {ip}')
 
 
 if __name__ == '__main__':
-    portscan = PortScan({"ip": "192.168.1.1", "port": "1-22000", "module_name": "nmap"})
+    portscan = PortScan({"ip": "192.168.1.1", "port": "1-22000", "module_name": "nmap", "task_id": "423131"})
     portscan.run()

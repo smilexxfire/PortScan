@@ -9,14 +9,19 @@
 @Comment ： 
 '''
 from common.module import Module
+from common.task import Task
 import nmap
 from datetime import datetime
-class Nmap(Module):
-    def __init__(self,ip:str,port:str):
+
+
+class Nmap(Module, Task):
+    def __init__(self, ip: str, port: str, task_id: str):
         self.module = "portscan"
         self.source = "nmap"
         self.collection = "portscan_nmap"
+
         Module.__init__(self, ip, port)
+        Task.__init__(self, task_id)
 
     def do_scan(self):
         self.nm = nmap.PortScanner()
@@ -53,14 +58,18 @@ class Nmap(Module):
 
     def run(self):
         self.begin()
+        self.receive_task()
         self.do_scan()
         self.deal_data()
         self.save_db()
         self.finish()
+        self.finnish_task(self.elapse, len(self.open_ports))
 
-def run(ip:str,port:str):
-    nmap = Nmap(ip,port)
-    nmap.run()
+
+def run(ip: str, port: str, task_id: str):
+    unmap = Nmap(ip, port, task_id)
+    unmap.run()
+
 
 if __name__ == '__main__':
-    run("192.168.1.1", "80")
+    run("192.168.1.1", "80", "123321-432432-43242")

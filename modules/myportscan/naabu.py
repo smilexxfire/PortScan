@@ -9,21 +9,21 @@
 @Comment ： 
 '''
 import datetime
-import sys
 import os
-sys.path.append("D:\\pythonProject\\PortScan")
+import subprocess
+import json
 
 from common.module import Module
-import subprocess
-
+from common.task import Task
 from config.log import logger
-import json
-class Naabu(Module):
-    def __init__(self,ip:str,port:str):
+class Naabu(Module, Task):
+    def __init__(self, ip: str, port: str, task_id: str):
         self.module = "portscan"
         self.source = "naabu"
         self.collection = "portscan_naabu"
+
         Module.__init__(self, ip, port)
+        Task.__init__(self, task_id)
 
     def do_scan(self):
         cmd = [self.execute_path, "-host", self.ip, "-Pn", "-p", self.port, "-j", "-o", self.result_file]
@@ -52,13 +52,17 @@ class Naabu(Module):
 
     def run(self):
         self.begin()
+        self.receive_task()
         self.do_scan()
         self.deal_data()
         self.save_db()
         self.finish()
-def run(ip:str,port:str):
-    naabu = Naabu(ip,port)
-    naabu.run()
+        self.finnish_task(self.elapse, len(self.open_ports))
+
+
+def run(ip: str, port: str, task_id: str):
+    nab = Naabu(ip, port, task_id)
+    nab.run()
 
 if __name__ == '__main__':
-    run("192.168.1.1", "1-20000")
+    run("192.168.1.1", "1-20000", "4238472386471367asd")

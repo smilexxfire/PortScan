@@ -33,7 +33,6 @@ def get_external_ip():
         return ip
     except requests.RequestException as e:
         print(f"An error occurred: {e}")
-        return None
 
 
 def rename_dict_key(dict_obj, old_key, new_key):

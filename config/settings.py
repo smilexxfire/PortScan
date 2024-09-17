@@ -1,11 +1,16 @@
-from common.utils import read_ini_config
 import platform
+
+from common.utils import read_ini_config, get_hostname, get_external_ip
 # 禁用所有警告信息
 import warnings
 warnings.filterwarnings("ignore")
 
 # 当前系统Windows or Linux
 PLATFORM = platform.system()
+# 本机基本信息
+EXTERNAL_IP = get_external_ip()
+HOSTNAME = get_hostname()
+
 # 路径设置
 import pathlib
 relative_directory = pathlib.Path(__file__).parent.parent  # 项目代码相对路径

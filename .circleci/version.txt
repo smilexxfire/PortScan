@@ -1,1 +1,1 @@
-smilexxfire/portscan:1.5
+smilexxfire/portscan:1.6
